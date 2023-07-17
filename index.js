@@ -5,6 +5,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const DBconnect = require("./config/Db");
 const ErrorMiddleware = require("./middleware/ErrMiddleware");
+const bodyParser = require("body-parser");
 require("express-async-errors");
 
 // configs
@@ -16,6 +17,7 @@ PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use(bodyParser.json());
 
 //routes import
 app.use("/api/vi/test", require("./routes/testRoutes"));
