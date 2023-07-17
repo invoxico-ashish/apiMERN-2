@@ -39,12 +39,12 @@ exports.registerController = async (req, res, next) => {
 };
 
 exports.loginController = async (req, res, next) => {
-  const { email, password } = req.body;
+  const email = req.body.email;
+  const password = req.body.password;
   console.log(email);
   //VALIDATION
   if (!email || !password) {
-    next("Invalid Username or Passwordddddd");
-    console.log("hdqagwdifqw");
+    next("Please provide feild");
   }
   //FIND BY  EMAil
   const user = await userModel.findOne({ email }).select("+password");
