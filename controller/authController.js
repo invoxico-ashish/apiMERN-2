@@ -38,10 +38,12 @@ exports.registerController = async (req, res, next) => {
   });
 };
 
+
 exports.loginController = async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  console.log(email);
+// const {email, password} = req.body
+const {email,password}= req.body
+  console.log(email)
+  
   //VALIDATION
   if (!email || !password) {
     next("Please provide feild");
