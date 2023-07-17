@@ -54,7 +54,7 @@ const {email,password}= req.body
     next("Invalid Credentials");
   }
   const isMatch = await user.comparePassword(password);
-  console.log(password);
+  // console.log(password);
   if (!isMatch) {
     next("Invalid username or Password");
   }
