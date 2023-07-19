@@ -9,7 +9,11 @@ const userAuth = async (req, res, next) => {
   try {
     console.log(authHeader);
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.SECRET_KEY);
+
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    req.user = data.userId;
+    console.log("dnoiqbfo");
+    console.log( req.user);
     next();
   } catch (err) {
     console.log(err);

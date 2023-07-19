@@ -16,19 +16,20 @@ const JobSchema = new mongoose.Schema(
       enum: ["Pending", "Reject", "Interview"],
       default: "Pending",
     },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "Users",
+    },
     workType: {
       type: String,
       enum: ["full-time", "part-time", "internship", "contract"],
       default: "full-time",
     },
-    createdBy: {
-      type: mongoose.Types.ObjectId,
-      ref: "Users",
-    },
+
     Workloc: {
       type: String,
-      default:"Mohali",
-      required:[true, "required"]
+      default: "Mohali",
+      required: [true, "required"],
     },
   },
   { timestamps: true }
