@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use("/api/vi/test", require("./routes/testRoutes"));
 app.use("/api/vi/auth", require("./routes/authRoutes"));
 app.use("/api/vi/user", require("./routes/userRoutes"));
+app.use("/api/vi/job", require("./routes/jobsRoute"));
 
 // err/validation middleware
 app.use(ErrorMiddleware);
