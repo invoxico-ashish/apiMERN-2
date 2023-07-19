@@ -7,13 +7,12 @@ const userAuth = async (req, res, next) => {
     next("Auth failed");
   }
   try {
-    console.log(authHeader);
-    const token = authHeader.split(" ")[1];
 
+    const token = authHeader.split(" ")[1];
     const data = jwt.verify(token, process.env.SECRET_KEY);
     req.user = data.userId;
-    console.log("dnoiqbfo");
-    console.log( req.user);
+    // console.log("dnoiqbfo");
+    // console.log( req.user);
     next();
   } catch (err) {
     console.log(err);

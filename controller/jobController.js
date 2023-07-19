@@ -1,4 +1,5 @@
 const jobModel = require("../model/JobModal");
+const mongoose = require("mongoose");
 
 exports.createjobController = async (req, res, next) => {
   const { company, position } = req.body;
@@ -54,6 +55,7 @@ exports.deleteJobController = async (req, res, next) => {
   const { id } = req.params;
 
   // find the job with the use of id
+  console.log(id);
   const job = await jobModel.findById({ _id: id });
   if (!job) {
     next("No job found with this id ");
@@ -65,5 +67,29 @@ exports.deleteJobController = async (req, res, next) => {
   await jobModel.deleteOne({ _id: id });
   res.status(200).json({
     message: "Success",
+  });
+};
+
+// JOB STATS & FILTER ----------------------------------------------
+
+exports.jobStatFilter = async (req, res, next) => {
+  const stats = await jobModel.aggregate([
+    // SEARCH BY USER_________________
+
+    {
+      $match: {
+        createdBy: new mongoose.Types.ObjectId(req.user),
+      },
+    },
+    {
+      $group: {
+        _id: "$status",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  res.status(200).json({
+    TotalJob: stats.length, // GIVE TOTAL JOBS (IN NUMBERS)
+    stats,
   });
 };
