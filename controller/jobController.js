@@ -5,11 +5,8 @@ exports.createjobController = async (req, res, next) => {
   if (!company || !position) {
     next("Provide all field");
   }
-
   req.body.createdBy = req.user;
-  console.log(req.user);
   const job = await jobModel.create(req.body);
-  console.log("kbioqvbf");
   console.log(job);
   res.status(200).json({ job });
 };
@@ -37,18 +34,35 @@ exports.updateJobController = async (req, res, next) => {
   // FIND JOB
 
   const job = await jobModel.findOne({ _id: id });
-
   if (!job) {
     next(`no job found with this id ${id}`);
   }
-  // console.log(job.createdBy);
-  if (req._id === job.createdBy.toString()) {
-    return;
+
+  if (!req.user === job.createdBy.toString()) {
     next(" you are not authrized to update this job ");
+    return;
   }
   const updatejob = await jobModel.findOneAndUpdate({ _id: id }, req.body, {
     new: true,
     runValidators: true,
   });
-  res.status(200).json({ updatejob });
+  res.send({ updatejob });
+};
+
+exports.deleteJobController = async (req, res, next) => {
+  const { id } = req.params;
+
+  // find the job with the use of id
+  const job = await jobModel.findById({ _id: id });
+  if (!job) {
+    next("No job found with this id ");
+  }
+  if (!req.user === job.createdBy.toString()) {
+    next("You are not authorized to delete this job ");
+    return;
+  }
+  await jobModel.deleteOne({ _id: id });
+  res.status(200).json({
+    message: "Success",
+  });
 };
