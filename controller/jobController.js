@@ -49,6 +49,7 @@ exports.updateJobController = async (req, res, next) => {
   res.send({ updatejob });
 };
 
+//          DELETE JOB BY ID ---------------------------------------------------------------
 exports.deleteJobController = async (req, res, next) => {
   const { id } = req.params;
 
